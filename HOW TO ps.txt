@@ -1,0 +1,5 @@
+Set-ExecutionPolicy RemoteSigned
+.\activate
+python setup.py develop
+$env:FLASK_APP: "myservice"
+flask run
