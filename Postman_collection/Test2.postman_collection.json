@@ -1,0 +1,1196 @@
+{
+	"info": {
+		"_postman_id": "09d35628-2e67-43c0-a3f6-16aad93e3822",
+		"name": "Test2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "retrieve existing quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02fb1e5c-bc6a-4699-9203-83486c5f44b1",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"            \"id\": 2,",
+							"            \"questions\": [",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Fred\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Barney\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Dyno\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Wilma's husband?\"",
+							"                },",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Wilma\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Pebbles\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Betty\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Fred's daughter?\"",
+							"                },",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Dyno\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Brontosaure\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"BamBam\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Flintstones' pet?\"",
+							"                }",
+							"            ]",
+							"        });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "retrieve non-existing quiz GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02fb1e5c-bc6a-4699-9203-83486c5f44b1",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData['code']).to.eql(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/12",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02fb1e5c-bc6a-4699-9203-83486c5f44b1",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"            \"answers\": [",
+							"                {",
+							"                    \"answer\": \"Fred\"",
+							"                },",
+							"                {",
+							"                    \"answer\": \"Barney\"",
+							"                },",
+							"                {",
+							"                    \"answer\": \"Dyno\"",
+							"                }",
+							"            ],",
+							"            \"question\": \"Who's Wilma's husband?\"",
+							"        });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2/question",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2",
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "correct answer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": 1});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2/question/Fred",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2",
+						"question",
+						"Fred"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get question _2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02fb1e5c-bc6a-4699-9203-83486c5f44b1",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"            \"answers\": [",
+							"                {",
+							"                    \"answer\": \"Wilma\"",
+							"                },",
+							"                {",
+							"                    \"answer\": \"Pebbles\"",
+							"                },",
+							"                {",
+							"                    \"answer\": \"Betty\"",
+							"                }",
+							"            ],",
+							"            \"question\": \"Who's Fred's daughter?\"",
+							"        });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2/question",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2",
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "answer Ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": 2});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2/question/Pebbles",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2",
+						"question",
+						"Pebbles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "answer ok: won a million clams",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"            \"msg\": \"you won 1 million clams!\"",
+							"        });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2/question/Dyno",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2",
+						"question",
+						"Dyno"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "double call to complete quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02fb1e5c-bc6a-4699-9203-83486c5f44b1",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": \"completed quiz\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2/question",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2",
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "double call to complete quiz question with answer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": \"completed quiz\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2/question/ciao'",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2",
+						"question",
+						"ciao'"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "vote non-existing option",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": \"non-existing answer!\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/1/question/35",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"1",
+						"question",
+						"35"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "correct answer _2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": 1});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/0/question/42",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"0",
+						"question",
+						"42"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wrong answer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": \"you lost!\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/0/question/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"0",
+						"question",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "double call to lost quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": \"you lost!\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/0/question/21",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"0",
+						"question",
+						"21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "triple call to lost quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({\"msg\": \"you lost!\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/0/question",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"0",
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"            \"answered_questions\": 4,",
+							"            \"total_questions\": 3",
+							"        });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "two loaded quizzes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({'loaded_quizzes': 2});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes/loaded",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes",
+						"loaded"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download quizzes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"            \"loadedquizzes\": [",
+							"                {",
+							"                    \"id\": 0,",
+							"                    \"questions\": [",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"33\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"42\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"1\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"What's the answer to all questions?\"",
+							"                        },",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"33\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"42\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"1\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"What's the answer to all questions?\"",
+							"                        }",
+							"                    ]",
+							"                },",
+							"                {",
+							"                    \"id\": 1,",
+							"                    \"questions\": [",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"Fred\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Barney\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Dyno\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"Who's Wilma's husband?\"",
+							"                        },",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"Wilma\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Pebbles\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Betty\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"Who's Fred's daughter?\"",
+							"                        },",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"Dyno\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Brontosaure\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"BamBam\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"Who's Flintstones' pet?\"",
+							"                        }",
+							"                    ]",
+							"                }",
+							"            ]",
+							"        });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete previously deleted quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.response.to.have.status(410)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete non-existing quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.response.to.have.status(404)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/12",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get previously existing quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.response.to.have.status(410)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new quiz after deletio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"quiznumber\"]).to.eql(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n                             \"questions\": [\n                                 {\n                                     \"question\": \"What's the answer to all questions?\",\n                                     \"answers\": [\n                                         {\n                                             \"answer\": \"33\",\n                                             \"correct\": 0\n                                         },\n                                         {\n                                             \"answer\": \"42\",\n                                             \"correct\": 1\n                                         },\n                                         {\n                                             \"answer\": \"1\",\n                                             \"correct\": 0\n                                         }\n                                     ]\n                                 },\n                                 {\n                                     \"question\": \"What's the answer to all questions?\",\n                                     \"answers\": [\n                                         {\n                                             \"answer\": \"33\",\n                                             \"correct\": 0\n                                         },\n                                         {\n                                             \"answer\": \"42\",\n                                             \"correct\": 1\n                                         },\n                                         {\n                                             \"answer\": \"1\",\n                                             \"correct\": 0\n                                         }\n                                     ]\n                                 }\n                             ]\n                         }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download quizzes _2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"            \"loadedquizzes\": [",
+							"                {",
+							"                    \"id\": 0,",
+							"                    \"questions\": [",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"33\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"42\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"1\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"What's the answer to all questions?\"",
+							"                        },",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"33\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"42\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"1\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"What's the answer to all questions?\"",
+							"                        }",
+							"                    ]",
+							"                },",
+							"                {",
+							"                    \"id\": 1,",
+							"                    \"questions\": [",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"Fred\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Barney\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Dyno\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"Who's Wilma's husband?\"",
+							"                        },",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"Wilma\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Pebbles\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Betty\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"Who's Fred's daughter?\"",
+							"                        },",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"Dyno\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"Brontosaure\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"BamBam\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"Who's Flintstones' pet?\"",
+							"                        }",
+							"                    ]",
+							"                },",
+							"                {",
+							"                    \"id\": 3,",
+							"                    \"questions\": [",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"33\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"42\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"1\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"What's the answer to all questions?\"",
+							"                        },",
+							"                        {",
+							"                            \"answers\": [",
+							"                                {",
+							"                                    \"answer\": \"33\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"42\"",
+							"                                },",
+							"                                {",
+							"                                    \"answer\": \"1\"",
+							"                                }",
+							"                            ],",
+							"                            \"question\": \"What's the answer to all questions?\"",
+							"                        }",
+							"                    ]",
+							"                }",
+							"            ]",
+							"        });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete quiz _2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f5363c-af77-45b5-8799-b905284438e7",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"            \"answered_questions\": 0,",
+							"            \"total_questions\": 3",
+							"        });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quiz/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quiz",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

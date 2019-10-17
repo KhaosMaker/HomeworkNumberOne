@@ -1,0 +1,436 @@
+{
+	"info": {
+		"_postman_id": "30359ef8-4022-42b2-b4ef-263cd344086e",
+		"name": "Test1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "no loaded quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({'loaded_quizzes': 0});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes/loaded",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes",
+						"loaded"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Quizzes 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"quiznumber\"]).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"questions\": [\n        {\n            \"question\": \"What's the answer to all questions?\",\n            \"answers\": [\n                {\n                    \"answer\": \"33\",\n                    \"correct\": 0\n                },\n                {\n                    \"answer\": \"42\",\n                    \"correct\": 1\n                },\n                {\n                    \"answer\": \"1\",\n                    \"correct\": 0\n                }\n            ]\n        },\n        {\n            \"question\": \"What's the answer to all questions?\",\n            \"answers\": [\n                {\n                    \"answer\": \"33\",\n                    \"correct\": 0\n                },\n                {\n                    \"answer\": \"42\",\n                    \"correct\": 1\n                },\n                {\n                    \"answer\": \"1\",\n                    \"correct\": 0\n                }\n            ]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Quizzes 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"quiznumber\"]).to.eql(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"questions\": [\n        {\n            \"question\": \"Who's Wilma's husband?\",\n            \"answers\": [\n                {\n                    \"answer\": \"Fred\",\n                    \"correct\": 1\n                },\n                {\n                    \"answer\": \"Barney\",\n                    \"correct\": 0\n                },\n                {\n                    \"answer\": \"Dyno\",\n                    \"correct\": 0\n                }\n            ]\n        },\n        {\n            \"question\": \"Who's Fred's daughter?\",\n            \"answers\": [\n                {\n                    \"answer\": \"Wilma\",\n                    \"correct\": 0\n                },\n                {\n                    \"answer\": \"Pebbles\",\n                    \"correct\": 1\n                },\n                {\n                    \"answer\": \"Betty\",\n                    \"correct\": 0\n                }\n            ]\n        },\n        {\n            \"question\": \"Who's Flintstones' pet?\",\n            \"answers\": [\n                {\n                    \"answer\": \"Dyno\",\n                    \"correct\": 1\n                },\n                {\n                    \"answer\": \"Brontosaure\",\n                    \"correct\": 0\n                },\n                {\n                    \"answer\": \"BamBam\",\n                    \"correct\": 0\n                }\n            ]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Quizzes 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"quiznumber\"]).to.eql(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"questions\": [\n        {\n            \"question\": \"Who's Wilma's husband?\",\n            \"answers\": [\n                {\n                    \"answer\": \"Fred\",\n                    \"correct\": 1\n                },\n                {\n                    \"answer\": \"Barney\",\n                    \"correct\": 0\n                },\n                {\n                    \"answer\": \"Dyno\",\n                    \"correct\": 0\n                }\n            ]\n        },\n        {\n            \"question\": \"Who's Fred's daughter?\",\n            \"answers\": [\n                {\n                    \"answer\": \"Wilma\",\n                    \"correct\": 0\n                },\n                {\n                    \"answer\": \"Pebbles\",\n                    \"correct\": 1\n                },\n                {\n                    \"answer\": \"Betty\",\n                    \"correct\": 0\n                }\n            ]\n        },\n        {\n            \"question\": \"Who's Flintstones' pet?\",\n            \"answers\": [\n                {\n                    \"answer\": \"Dyno\",\n                    \"correct\": 1\n                },\n                {\n                    \"answer\": \"Brontosaure\",\n                    \"correct\": 0\n                },\n                {\n                    \"answer\": \"BamBam\",\n                    \"correct\": 0\n                }\n            ]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the three quizzes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({'loaded_quizzes': 3});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes/loaded",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes",
+						"loaded"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the three quizzes Full",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcc0a47-d71d-4523-8bb3-4d6dfd3ab37f",
+						"exec": [
+							"pm.test(\"JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(",
+							"        {",
+							"    \"loadedquizzes\": [",
+							"        {",
+							"            \"id\": 0,",
+							"            \"questions\": [",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"33\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"42\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"1\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"What's the answer to all questions?\"",
+							"                },",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"33\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"42\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"1\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"What's the answer to all questions?\"",
+							"                }",
+							"            ]",
+							"        },",
+							"        {",
+							"            \"id\": 1,",
+							"            \"questions\": [",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Fred\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Barney\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Dyno\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Wilma's husband?\"",
+							"                },",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Wilma\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Pebbles\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Betty\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Fred's daughter?\"",
+							"                },",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Dyno\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Brontosaure\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"BamBam\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Flintstones' pet?\"",
+							"                }",
+							"            ]",
+							"        },",
+							"        {",
+							"            \"id\": 2,",
+							"            \"questions\": [",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Fred\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Barney\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Dyno\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Wilma's husband?\"",
+							"                },",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Wilma\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Pebbles\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Betty\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Fred's daughter?\"",
+							"                },",
+							"                {",
+							"                    \"answers\": [",
+							"                        {",
+							"                            \"answer\": \"Dyno\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"Brontosaure\"",
+							"                        },",
+							"                        {",
+							"                            \"answer\": \"BamBam\"",
+							"                        }",
+							"                    ],",
+							"                    \"question\": \"Who's Flintstones' pet?\"",
+							"                }",
+							"            ]",
+							"        }",
+							"    ]",
+							"}",
+							"        );",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/quizzes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"quizzes"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4a38f747-4410-4f12-ba36-a8d7cd584193",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "99a11449-7359-4c38-8d9c-d703bcdef662",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
