@@ -43,7 +43,7 @@ def single_quiz(id):
         # TODO: delete a quiz and get back number of answered questions
         # and total number of questions
         result = jsonify({
-            "answered_questions": _LOADED_QUIZZES[id].currentQuestion+1, 
+            "answered_questions": _LOADED_QUIZZES[id].currentQuestion, 
             "total_questions": quizLenght(id)
             })
         del _LOADED_QUIZZES[id]
@@ -64,10 +64,10 @@ def play_quiz(id):
         # TODO: retrieve next question in a quiz, handle exceptions
         try:
             result = _LOADED_QUIZZES[id].getQuestion()
-        except CompletedQuizError as msg:
-            result = jsonify({"msg":msg})
-        except LostQuizError as msg:
-            result = jsonify({"msg":msg})
+        except CompletedQuizError:
+            result = jsonify({"msg": "completed quiz"})
+        except LostQuizError:
+            result = jsonify({"msg": "you lost!"})
         
     return result
 
@@ -83,19 +83,21 @@ def answer_question(id, answer):
     # TODO: check if quiz is lost or completed and act consequently
     try:
         _LOADED_QUIZZES[id].isOpen()
-    except CompletedQuizError as msg:
-        result = msg
-    except LostQuizError as msg:
-        result = msg
+    except CompletedQuizError:
+        return jsonify({'msg': "completed quiz"})
+    except LostQuizError:
+        return jsonify({'msg': "you lost!"})
 
     if 'PUT' == request.method:  
         # TODO: Check answers and handle exceptions
         try:
-            return _LOADED_QUIZZES[id].checkAnswer(answer)
+            result = _LOADED_QUIZZES[id].checkAnswer(answer)
         except CompletedQuizError:
             result = "you won 1 million clams!"
         except LostQuizError:
-            result = msg
+            result = "you lost!"
+        except NonExistingAnswerError:
+            result = "non-existing answer!"
 
         return jsonify({'msg': result})
 
