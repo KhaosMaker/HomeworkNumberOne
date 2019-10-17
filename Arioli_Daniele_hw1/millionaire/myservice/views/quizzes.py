@@ -13,22 +13,20 @@ _QUIZNUMBER = 0  # index of the last created quizzes
 def all_quizzes():
     result = ""
     if 'POST' == request.method:
-        # TODO: Create new quiz 
         result = create_quiz(request)
-    elif 'GET' == request.method:
-        # TODO: Retrieve all loaded quizzes
+    elif 'GET' == request.method:      
         result = get_all_quizzes(request)
-
     return result
+
 
 # TODO: complete the decoration
 @quizzes.route("/quizzes/loaded", methods=['GET'])
 def loaded_quizzes():  # returns the number of quizzes currently loaded in the system
-    return len(get_all_quizzes(request)) # TODO: Return the correct number
+    return jsonify({'loaded_quizzes':len(get_all_quiz(request))}) # TODO: Return the correct number
 
 
 # TODO: complete the decoration
-@quizzes.route("/quiz/<id>", methods=['GET', 'DELETE'])
+@quizzes.route("/quiz/<string:id>", methods=['GET', 'DELETE'])
 def single_quiz(id):
     global _LOADED_QUIZZES
     result = ""
@@ -54,24 +52,28 @@ def single_quiz(id):
 
 
 # TODO: complete the decoration
-@quizzes.route("/quiz/<id>/question", methods=['GET'])
+@quizzes.route("/quiz/<string:id>/question", methods=['GET'])
 def play_quiz(id):
     global _LOADED_QUIZZES
     result = ""
 
     # TODO: check if the quiz is an existing one
     exists_quiz(id)
+
     if 'GET' == request.method:  
         # TODO: retrieve next question in a quiz, handle exceptions
-        if _LOADED_QUIZZES.currentQuestion+1 > quizLenght(id):
-            abort(410)
-        result = _LOADED_QUIZZES[id].questions[_LOADED_QUIZZES.currentQuestion+1].serialize()
-
+        try:
+            result = _LOADED_QUIZZES[id].getQuestion()
+        except CompletedQuizError as msg:
+            result = jsonify({"msg":msg})
+        except LostQuizError as msg:
+            result = jsonify({"msg":msg})
+        
     return result
 
 
 # TODO: complete the decoration
-@quizzes.route("/quiz/<id>/question/<answer>", methods=['PUT'])
+@quizzes.route("/quiz/<string:id>/question/<string:answer>", methods=['PUT'])
 def answer_question(id, answer):
     global _LOADED_QUIZZES
     result = ""
@@ -89,13 +91,13 @@ def answer_question(id, answer):
     if 'PUT' == request.method:  
         # TODO: Check answers and handle exceptions
         try:
-            result = _LOADED_QUIZZES[id].checkAnswer(answer)
-        except CompletedQuizError as msg:
+            return _LOADED_QUIZZES[id].checkAnswer(answer)
+        except CompletedQuizError:
+            result = "you won 1 million clams!"
+        except LostQuizError:
             result = msg
-        except LostQuizError as msg:
-            result = mesg
 
-        return jsonify({'msg': result}), 200
+        return jsonify({'msg': result})
 
 ############################################
 # USEFUL FUNCTIONS BELOW (use them, don't change them)
@@ -126,6 +128,10 @@ def get_all_quizzes(request):
 
     return jsonify(loadedquizzes=[e.serialize() for e in _LOADED_QUIZZES.values()])
 
+def get_all_quiz(request):
+    global _LOADED_QUIZZES
+
+    return [e.serialize() for e in _LOADED_QUIZZES.values()]
 
 def exists_quiz(id):
     if int(id) > _QUIZNUMBER:
